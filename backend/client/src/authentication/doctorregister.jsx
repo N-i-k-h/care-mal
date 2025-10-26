@@ -27,6 +27,7 @@ function DoctorRegister() {
       console.log('Doctor registration success:', res.data);
       navigate('/doctorlogin');
     } catch (err) {
+      console.error("Doctor Registration Error:", err.response?.data); // Keep this for debugging
       setError(err.response?.data?.message || 'Registration failed');
     }
   };
