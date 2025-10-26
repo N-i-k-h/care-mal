@@ -23,11 +23,6 @@ function DoctorRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD:backend/client/src/authentication/doctorregister.jsx
-      // --- THIS LINE IS NOW FIXED ---
-=======
-      // CHANGED THIS LINE
->>>>>>> 1ee24d429419c90854b1ac497fc6ea27fb706837:client/src/authentication/doctorregister.jsx
       const res = await axios.post('/api/auth/doctor/register', formData);
       console.log('Doctor registration success:', res.data);
       navigate('/doctorlogin');
