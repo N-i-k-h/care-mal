@@ -22,6 +22,7 @@ function UserLogin() {
 
       navigate('/userhome');
     } catch (err) {
+      console.error("Login Error:", err.response?.data); // Keep this for debugging
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
