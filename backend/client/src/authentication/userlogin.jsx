@@ -11,7 +11,8 @@ function UserLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/user/login', {
+      // --- 1. THIS LINE IS NOW FIXED ---
+      const response = await axios.post('/api/auth/user/login', {
         email,
         password
       });
@@ -67,9 +68,12 @@ function UserLogin() {
                 placeholder="Enter your password"
               />
               <div className="text-right mt-2">
-                <a href="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
+                
+                {/* --- 2. THIS LINE IS NOW FIXED --- */}
+                <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
                   Forgot password?
-                </a>
+                </Link>
+                
               </div>
             </div>
 

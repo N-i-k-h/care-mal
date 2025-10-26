@@ -11,7 +11,7 @@ function DoctorLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/doctor/login', {
+      const response = await axios.post('/api/auth/doctor/login', {
         email,
         password
       });
@@ -67,9 +67,12 @@ function DoctorLogin() {
                 placeholder="Enter your password"
               />
               <div className="text-right mt-2">
-                <a href="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
+                
+                {/* --- THIS IS THE FIXED LINE --- */}
+                <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
                   Forgot password?
-                </a>
+                </Link>
+                
               </div>
             </div>
 
