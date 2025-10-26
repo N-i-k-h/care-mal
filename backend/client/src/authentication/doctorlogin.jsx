@@ -11,10 +11,6 @@ function DoctorLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-<<<<<<< HEAD:backend/client/src/authentication/doctorlogin.jsx
-=======
-      // CHANGED THIS LINE
->>>>>>> 1ee24d429419c90854b1ac497fc6ea27fb706837:client/src/authentication/doctorlogin.jsx
       const response = await axios.post('/api/auth/doctor/login', {
         email,
         password
@@ -71,12 +67,9 @@ function DoctorLogin() {
                 placeholder="Enter your password"
               />
               <div className="text-right mt-2">
-                
-                {/* --- THIS IS THE FIXED LINE --- */}
                 <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
                   Forgot password?
                 </Link>
-                
               </div>
             </div>
 
@@ -85,7 +78,7 @@ function DoctorLogin() {
               className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300"
             >
               Sign In
-            </Button>
+            </button>
           </form>
 
           <div className="mt-6 text-center">
