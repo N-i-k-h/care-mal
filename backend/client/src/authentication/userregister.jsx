@@ -23,7 +23,11 @@ function UserRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+<<<<<<< HEAD:backend/client/src/authentication/userregister.jsx
       // --- THIS LINE IS NOW FIXED ---
+=======
+      // CHANGED THIS LINE
+>>>>>>> 1ee24d429419c90854b1ac497fc6ea27fb706837:client/src/authentication/userregister.jsx
       const res = await axios.post('/api/auth/user/register', formData);
       console.log('Registration successful:', res.data);
       navigate('/login');

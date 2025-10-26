@@ -11,6 +11,10 @@ function DoctorLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+<<<<<<< HEAD:backend/client/src/authentication/doctorlogin.jsx
+=======
+      // CHANGED THIS LINE
+>>>>>>> 1ee24d429419c90854b1ac497fc6ea27fb706837:client/src/authentication/doctorlogin.jsx
       const response = await axios.post('/api/auth/doctor/login', {
         email,
         password
@@ -81,7 +85,7 @@ function DoctorLogin() {
               className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300"
             >
               Sign In
-            </button>
+            </Button>
           </form>
 
           <div className="mt-6 text-center">
