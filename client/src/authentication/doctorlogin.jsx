@@ -11,7 +11,8 @@ function DoctorLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/doctor/login', {
+      // CHANGED THIS LINE
+      const response = await axios.post('/api/auth/doctor/login', {
         email,
         password
       });
@@ -78,7 +79,7 @@ function DoctorLogin() {
               className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300"
             >
               Sign In
-            </button>
+            </Button>
           </form>
 
           <div className="mt-6 text-center">
