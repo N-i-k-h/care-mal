@@ -23,7 +23,8 @@ function UserRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/user/register', formData);
+      // CHANGED THIS LINE
+      const res = await axios.post('/api/auth/user/register', formData);
       console.log('Registration successful:', res.data);
       navigate('/login');
     } catch (err) {
