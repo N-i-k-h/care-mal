@@ -23,7 +23,8 @@ function DoctorRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/doctor/register', formData);
+      // CHANGED THIS LINE
+      const res = await axios.post('/api/auth/doctor/register', formData);
       console.log('Doctor registration success:', res.data);
       navigate('/doctorlogin');
     } catch (err) {
