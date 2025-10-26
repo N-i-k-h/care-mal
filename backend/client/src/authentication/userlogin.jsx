@@ -11,11 +11,6 @@ function UserLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-<<<<<<< HEAD:backend/client/src/authentication/userlogin.jsx
-      // --- 1. THIS LINE IS NOW FIXED ---
-=======
-      // CHANGED THIS LINE
->>>>>>> 1ee24d429419c90854b1ac497fc6ea27fb706837:client/src/authentication/userlogin.jsx
       const response = await axios.post('/api/auth/user/login', {
         email,
         password
@@ -72,12 +67,9 @@ function UserLogin() {
                 placeholder="Enter your password"
               />
               <div className="text-right mt-2">
-                
-                {/* --- 2. THIS LINE IS NOW FIXED --- */}
                 <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
                   Forgot password?
                 </Link>
-                
               </div>
             </div>
 
