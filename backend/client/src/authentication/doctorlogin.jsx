@@ -22,6 +22,7 @@ function DoctorLogin() {
 
       navigate('/doctorhome');
     } catch (err) {
+      console.error("Doctor Login Error:", err.response?.data); // Keep this for debugging
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
