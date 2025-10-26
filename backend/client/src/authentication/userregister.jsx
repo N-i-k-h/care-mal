@@ -27,6 +27,9 @@ function UserRegister() {
       console.log('Registration successful:', res.data);
       navigate('/login');
     } catch (err) {
+      // --- THIS IS THE NEW LINE YOU NEEDED TO ADD ---
+      console.error("Registration Error:", err.response.data); 
+      
       setError(err.response?.data?.message || 'Registration failed');
     }
   };
