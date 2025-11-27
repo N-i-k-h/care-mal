@@ -13,6 +13,7 @@ function DoctorRegister() {
   });
 
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,13 +23,38 @@ function DoctorRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      const res = await axios.post('/api/auth/doctor/register', formData);
+      // send both phoneNumber and phone to increase compatibility
+      const payload = {
+        name: formData.name,
+        phoneNumber: formData.phoneNumber,
+        phone: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
+        specialization: formData.specialization,
+        licenseNumber: formData.licenseNumber
+      };
+
+      const res = await axios.post('/api/auth/doctor/register', payload);
       console.log('Doctor registration success:', res.data);
+      // optionally show a message before navigating
       navigate('/doctorlogin');
     } catch (err) {
-      console.error("Doctor Registration Error:", err.response?.data); // Keep this for debugging
-      setError(err.response?.data?.message || 'Registration failed');
+      // improved debug logging
+      console.error('Doctor Registration Error: ', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status
+      });
+
+      // backend may return { message: '...' } or error details
+      const serverMessage = err.response?.data?.message || err.response?.data?.error || null;
+      setError(serverMessage || 'Registration failed. Please check input and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,25 +66,88 @@ function DoctorRegister() {
         {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {['name', 'phoneNumber', 'email', 'password', 'specialization', 'licenseNumber'].map((field) => (
-            <div key={field}>
-              <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
-                {field === 'phoneNumber' ? 'Phone Number' : field === 'licenseNumber' ? 'License Number' : field}
-              </label>
-              <input
-                type={field === 'email' ? 'email' : field === 'password' ? 'password' : 'text'}
-                id={field}
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              />
-            </div>
-          ))}
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
 
-          <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">
-            Register
+          <div>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="specialization" className="block text-sm font-medium text-gray-700">Specialization</label>
+            <input
+              id="specialization"
+              name="specialization"
+              type="text"
+              value={formData.specialization}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700">License Number</label>
+            <input
+              id="licenseNumber"
+              name="licenseNumber"
+              type="text"
+              value={formData.licenseNumber}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 disabled:opacity-60"
+          >
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
 
