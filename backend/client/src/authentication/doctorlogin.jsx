@@ -6,24 +6,38 @@ function DoctorLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
       const response = await axios.post('/api/auth/doctor/login', {
         email,
         password
       });
 
-      const { token, doctor } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('doctor', JSON.stringify(doctor));
+      console.log('Doctor login response:', response.data);
+
+      const { token, doctor } = response.data || {};
+      if (token) localStorage.setItem('token', token);
+      if (doctor) localStorage.setItem('doctor', JSON.stringify(doctor));
 
       navigate('/doctorhome');
     } catch (err) {
-      console.error("Doctor Login Error:", err.response?.data); // Keep this for debugging
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      console.error('Doctor Login Error:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status
+      });
+
+      const serverMessage = err.response?.data?.message || err.response?.data?.error || null;
+      setError(serverMessage || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,9 +54,7 @@ function DoctorLogin() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -55,9 +67,7 @@ function DoctorLogin() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input
                 type="password"
                 id="password"
@@ -68,26 +78,23 @@ function DoctorLogin() {
                 placeholder="Enter your password"
               />
               <div className="text-right mt-2">
-                <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">
-                  Forgot password?
-                </Link>
+                <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-500">Forgot password?</Link>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300"
+              disabled={loading}
+              className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-60"
             >
-              Sign In
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               New to Care-mal?{' '}
-              <Link to="/register-doctor" className="font-medium text-green-600 hover:text-green-500">
-                Create an account
-              </Link>
+              <Link to="/register-doctor" className="font-medium text-green-600 hover:text-green-500">Create an account</Link>
             </p>
           </div>
         </div>
