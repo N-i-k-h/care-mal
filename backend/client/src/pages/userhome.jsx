@@ -29,7 +29,7 @@ function HomePage() {
       title: "Onsite Appointments",
       description: "Schedule visits easily with our expert veterinarians at your convenience.",
       image: onsiteAppointmentsImage,
-      link: "https://live-doctor-patient-ap65.bolt.host/"
+      link: "https://location-y756.onrender.com/"
     },
     {
       title: "AI Voice Doctor",
